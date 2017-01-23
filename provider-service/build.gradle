@@ -1,0 +1,63 @@
+group 'info.novatec.pact.example'
+version '1.0-SNAPSHOT'
+
+buildscript {
+    repositories {
+        mavenCentral()
+    }
+    dependencies {
+        classpath("org.springframework.boot:spring-boot-gradle-plugin:1.4.3.RELEASE")
+        classpath 'au.com.dius:pact-jvm-provider-gradle_2.11:3.3.3'
+    }
+}
+
+apply plugin: 'java'
+apply plugin: 'idea'
+apply plugin: 'org.springframework.boot'
+apply plugin: 'au.com.dius.pact'
+
+jar {
+    baseName = 'provider-service'
+    version = '1.0.0'
+}
+
+sourceCompatibility = 1.8
+targetCompatibility = 1.8
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    compile group: 'org.springframework.boot', name: 'spring-boot-starter-web', version: '1.4.3.RELEASE'
+    compile group: 'org.springframework.boot', name: 'spring-boot-starter-actuator', version: '1.4.3.RELEASE'
+    testCompile group: 'org.springframework.boot', name: 'spring-boot-starter-test', version: '1.4.3.RELEASE'
+}
+
+task(startProviderService, dependsOn: 'classes', type: JavaExec) {
+    classpath = files('../provider-service/build/libs/provider-service-1.0.0.jar')
+    classpath = sourceSets.main.runtimeClasspath
+    main = 'product_demo.Application'
+}
+
+pact {
+
+    serviceProviders {
+
+        provider1 {
+            protocol = 'http'
+            host = 'localhost'
+            port = 8080
+            path = '/'
+
+            hasPactWith('product-consumer-demo') {
+
+                pactFile = file('../consumer-service/target/pacts/product-consumer-demo-product-provider-demo.json')
+
+            }
+        }
+
+    }
+}
+pactVerify.mustRunAfter startProviderService
+

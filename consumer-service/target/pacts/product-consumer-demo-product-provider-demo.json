@@ -1,0 +1,38 @@
+{
+    "provider": {
+        "name": "product-provider-demo"
+    },
+    "consumer": {
+        "name": "product-consumer-demo"
+    },
+    "interactions": [
+        {
+            "description": "ConsumerDemoTest interaction",
+            "request": {
+                "method": "GET",
+                "path": "/product",
+                "query": "id=537"
+            },
+            "response": {
+                "status": 200,
+                "headers": {
+                    "Content-Type": "application/json;charset=UTF-8"
+                },
+                "body": {
+                    "description": "ConsumerAtest verifies provider",
+                    "name": "ConsumerAtest",
+                    "type": "testing product"
+                }
+            },
+            "providerState": "test demo first state"
+        }
+    ],
+    "metadata": {
+        "pact-specification": {
+            "version": "2.0.0"
+        },
+        "pact-jvm": {
+            "version": "3.3.3"
+        }
+    }
+}
