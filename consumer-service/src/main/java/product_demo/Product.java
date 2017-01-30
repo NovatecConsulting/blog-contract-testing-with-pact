@@ -1,8 +1,5 @@
 package product_demo;
 
-/**
- * Created by AAT on 23.01.2017.
- */
 public class Product {
     private Integer id;
     private String name;

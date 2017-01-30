@@ -3,15 +3,15 @@
         "name": "product-provider-demo"
     },
     "consumer": {
-        "name": "product-consumer-demo"
+        "name": "product-second-consumer-demo"
     },
     "interactions": [
         {
-            "description": "ConsumerDemoTest interaction",
+            "description": "SecondConsumerDemoTest interaction",
             "request": {
                 "method": "GET",
                 "path": "/product",
-                "query": "id=537"
+                "query": "id=532"
             },
             "response": {
                 "status": 200,
@@ -19,12 +19,11 @@
                     "Content-Type": "application/json;charset=UTF-8"
                 },
                 "body": {
-                    "description": "Consumer Test verifies provider",
                     "name": "Consumer Test",
                     "type": "testing product"
                 }
             },
-            "providerState": "test demo first state"
+            "providerState": "second consumer demo first state"
         }
     ],
     "metadata": {

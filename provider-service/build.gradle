@@ -56,6 +56,12 @@ pact {
                 pactFile = file('../consumer-service/target/pacts/product-consumer-demo-product-provider-demo.json')
 
             }
+
+            hasPactWith('product-second-consumer-demo') {
+
+                pactFile = file('../consumer-second-service/target/pacts/product-second-consumer-demo-product-provider-demo.json')
+
+            }
         }
 
     }

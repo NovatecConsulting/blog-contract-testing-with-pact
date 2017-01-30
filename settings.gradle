@@ -1,4 +1,5 @@
 rootProject.name = 'pact-demo-novatec'
 include 'consumer-service'
 include 'provider-service'
+include 'consumer-second-service'
 

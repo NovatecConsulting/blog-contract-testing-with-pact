@@ -1,15 +1,10 @@
-package product_demo.annot_demo;
+package product_demo;
 
-import au.com.dius.pact.consumer.Pact;
-import au.com.dius.pact.consumer.PactProviderRule;
-import au.com.dius.pact.consumer.PactVerification;
+import au.com.dius.pact.consumer.ConsumerPactTest;
 import au.com.dius.pact.consumer.dsl.PactDslWithProvider;
 import au.com.dius.pact.model.PactFragment;
-import org.junit.Rule;
-import org.junit.Test;
-import product_demo.Product;
-import product_demo.ProductRestFetcher;
 
+import java.io.IOException;
 import java.net.URI;
 import java.util.HashMap;
 import java.util.Map;
@@ -17,42 +12,45 @@ import java.util.Map;
 import static junit.framework.TestCase.assertEquals;
 import static product_demo.TestConstants.*;
 
-public class ConsumerAnnotDemoTest {
-    @Rule
-    public PactProviderRule pactProviderRule = new PactProviderRule("product-provider-demo", this);
-
-    @Pact(consumer = "product-consumer-demo")
-    public PactFragment createFragment(PactDslWithProvider pactDslWithProvider) {
+public class SecondConsumerDemoTest extends ConsumerPactTest {
+    @Override
+    protected PactFragment createFragment(PactDslWithProvider pactDslWithProvider) {
         Map<String, String> headers = new HashMap<>();
         headers.put("Content-Type", "application/json;charset=UTF-8");
         return pactDslWithProvider
-                .given("test demo first state")
-                .uponReceiving("ConsumerDemoTest interaction")
+                .given("second consumer demo first state")
+                .uponReceiving("SecondConsumerDemoTest interaction")
                 .path("/product")
-                .query("id=537")
+                .query("id=532")
                 .method("GET")
                 .willRespondWith()
                 .status(200)
                 .headers(headers)
                 .body("{" +
                         "\"name\": \"Consumer Test\"," +
-                        "\"description\" : \"Consumer Test verifies provider\"," +
                         "\"type\": \"testing product\"" +
                         "}")
                 .toFragment();
     }
 
-    @Test
-    @PactVerification
-    public void runTest() throws Exception {
-        String url = pactProviderRule.getConfig().url();
+    @Override
+    protected String providerName() {
+        return "product-provider-demo";
+    }
 
-        URI productInfoUri = URI.create(String.format("%s/%s", url, "product?id=537"));
+    @Override
+    protected String consumerName() {
+        return "product-second-consumer-demo";
+    }
+
+    @Override
+    protected void runTest(String url) throws IOException {
+
+        URI productInfoUri = URI.create(String.format("%s/%s", url, "product?id=532"));
         ProductRestFetcher productRestFetcher = new ProductRestFetcher();
         Product product = productRestFetcher.fetchProductInfo(productInfoUri);
 
         assertEquals(EXPECTED_NAME, product.getName());
         assertEquals(EXPECTED_TYPE, product.getType());
-        assertEquals(EXPECTED_DESC, product.getDescription());
     }
 }

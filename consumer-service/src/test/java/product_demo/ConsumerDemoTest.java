@@ -10,10 +10,8 @@ import java.util.HashMap;
 import java.util.Map;
 
 import static junit.framework.TestCase.assertEquals;
+import static product_demo.TestConstants.*;
 
-/**
- * Created by AAT on 23.01.2017.
- */
 public class ConsumerDemoTest extends ConsumerPactTest {
     protected PactFragment createFragment(PactDslWithProvider pactDslWithProvider) {
         Map<String, String> headers = new HashMap<>();
@@ -28,8 +26,8 @@ public class ConsumerDemoTest extends ConsumerPactTest {
                 .status(200)
                 .headers(headers)
                 .body("{" +
-                        "\"name\": \"ConsumerAtest\"," +
-                        "\"description\" : \"ConsumerAtest verifies provider\"," +
+                        "\"name\": \"Consumer Test\"," +
+                        "\"description\" : \"Consumer Test verifies provider\"," +
                         "\"type\": \"testing product\"" +
                         "}")
                 .toFragment();
@@ -44,14 +42,12 @@ public class ConsumerDemoTest extends ConsumerPactTest {
     }
 
     protected void runTest(String url) throws IOException {
-        final String EXPECTED_NAME = "ConsumerAtest";
-        final String EXTECTED_TYPE = "testing product";
-
         URI productInfoUri = URI.create(String.format("%s/%s", url, "product?id=537"));
         ProductRestFetcher productRestFetcher = new ProductRestFetcher();
         Product product = productRestFetcher.fetchProductInfo(productInfoUri);
 
         assertEquals(EXPECTED_NAME, product.getName());
-        assertEquals(EXTECTED_TYPE, product.getType());
+        assertEquals(EXPECTED_TYPE, product.getType());
+        assertEquals(EXPECTED_DESC, product.getDescription());
     }
 }
