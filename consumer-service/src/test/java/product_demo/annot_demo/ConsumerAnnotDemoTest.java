@@ -17,6 +17,9 @@ import java.util.Map;
 import static junit.framework.TestCase.assertEquals;
 import static product_demo.TestConstants.*;
 
+/**
+ * The purpose of this test class is to demonstrate the style of creating a contract test with PACT and annotation style.
+ */
 public class ConsumerAnnotDemoTest {
     @Rule
     public PactProviderRule pactProviderRule = new PactProviderRule("product-provider-demo", this);

@@ -2,7 +2,7 @@
 
 | Description    | Value |
 | -------------- | ----- |
-| Date Generated | Mon Jan 30 17:07:34 CET 2017 |
+| Date Generated | Fri Feb 03 14:44:44 CET 2017 |
 | Pact Version   | 3.3.3 |
 
 ## Verifying a pact between _product-consumer-demo_ and _product-provider-demo_

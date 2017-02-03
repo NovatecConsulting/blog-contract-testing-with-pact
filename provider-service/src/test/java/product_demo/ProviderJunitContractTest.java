@@ -11,9 +11,6 @@ import au.com.dius.pact.provider.junit.target.TestTarget;
 import org.junit.BeforeClass;
 import org.junit.runner.RunWith;
 
-/**
- * Created by AAT on 24.01.2017.
- */
 @RunWith(PactRunner.class)
 @Provider("product-provider-demo")
 @PactFolder("../consumer-service/target/pacts")

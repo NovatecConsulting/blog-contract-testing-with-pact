@@ -12,6 +12,9 @@ import java.util.Map;
 import static junit.framework.TestCase.assertEquals;
 import static product_demo.TestConstants.*;
 
+/**
+ * The purpose of this test class is to demonstrate the style of creating a contract test with PACT and no annotation style.
+ */
 public class ConsumerDemoTest extends ConsumerPactTest {
     protected PactFragment createFragment(PactDslWithProvider pactDslWithProvider) {
         Map<String, String> headers = new HashMap<>();
