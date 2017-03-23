@@ -17,23 +17,25 @@ import static product_demo.TestConstants.*;
  */
 public class ConsumerDemoTest extends ConsumerPactTest {
     protected PactFragment createFragment(PactDslWithProvider pactDslWithProvider) {
+        //@formatter:off
         Map<String, String> headers = new HashMap<>();
         headers.put("Content-Type", "application/json;charset=UTF-8");
         return pactDslWithProvider
                 .given("test demo first state")
                 .uponReceiving("ConsumerDemoTest interaction")
-                .path("/product")
-                .query("id=537")
-                .method("GET")
+                    .path("/product")
+                    .query("id=537")
+                    .method("GET")
                 .willRespondWith()
-                .status(200)
-                .headers(headers)
-                .body("{" +
+                    .status(200)
+                    .headers(headers)
+                    .body("{" +
                         "\"name\": \"Consumer Test\"," +
                         "\"description\" : \"Consumer Test verifies provider\"," +
                         "\"type\": \"testing product\"" +
                         "}")
                 .toFragment();
+         //@formatter:on
     }
 
     protected String providerName() {
