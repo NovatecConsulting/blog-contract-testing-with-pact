@@ -20,8 +20,13 @@ public class ProductApiContractTest {
     @TestTarget
     public final Target target = new HttpTarget(8090);
 
+    @State("test demo first state")
+    public void demoStateConsumerOne() {
+        System.out.println("Provider is in demo state...");
+    }
+
     @State("second consumer demo first state")
-    public void demoState() {
+    public void demoStateConsumerTwo() {
         System.out.println("Provider is in demo state...");
     }
 }

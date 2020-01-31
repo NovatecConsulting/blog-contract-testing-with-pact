@@ -1,0 +1,5 @@
+product-service:
+  baseUrl: "http://localhost:8090"
+
+server:
+  port: 8092

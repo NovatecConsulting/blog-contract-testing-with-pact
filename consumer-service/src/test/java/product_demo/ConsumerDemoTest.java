@@ -1,58 +1,71 @@
 package product_demo;
 
-import au.com.dius.pact.consumer.ConsumerPactTest;
+import au.com.dius.pact.consumer.Pact;
 import au.com.dius.pact.consumer.dsl.PactDslWithProvider;
-import au.com.dius.pact.model.PactFragment;
+import au.com.dius.pact.consumer.junit5.PactConsumerTestExt;
+import au.com.dius.pact.consumer.junit5.PactTestFor;
+import au.com.dius.pact.model.RequestResponsePact;
+import org.assertj.core.api.Assertions;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.TestInstance;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
 
-import java.io.IOException;
-import java.net.URI;
 import java.util.HashMap;
 import java.util.Map;
 
-import static junit.framework.TestCase.assertEquals;
 import static product_demo.TestConstants.*;
 
 /**
- * The purpose of this test class is to demonstrate the style of creating a contract test with PACT and no annotation style.
+ * The purpose of this test class is to demonstrate the style of creating a contract test with PACT.
  */
-public class ConsumerDemoTest extends ConsumerPactTest {
-    protected PactFragment createFragment(PactDslWithProvider pactDslWithProvider) {
-        //@formatter:off
+@SpringBootTest
+@ExtendWith(PactConsumerTestExt.class)
+@TestInstance(TestInstance.Lifecycle.PER_CLASS)
+@PactTestFor(providerName = "product-provider-demo", port = "8081")
+public class ConsumerDemoTest {
+
+    @Autowired
+    private ProductConsumer productConsumer;
+
+    @Autowired
+    private ProductServiceConfigurationProperties productServiceConfigurationProperties;
+
+    @BeforeAll
+    void setUp() {
+        productServiceConfigurationProperties.setBaseUrl("http://127.0.0.1:8081");
+    }
+
+    @Pact(provider = "product-provider-demo", consumer = "product-consumer-demo")
+    RequestResponsePact createPact(PactDslWithProvider pactDslWithProvider) {
         Map<String, String> headers = new HashMap<>();
-        headers.put("Content-Type", "application/json;charset=UTF-8");
+        headers.put("Content-Type", "application/json");
         return pactDslWithProvider
                 .given("test demo first state")
                 .uponReceiving("ConsumerDemoTest interaction")
-                    .path("/product")
-                    .query("id=537")
-                    .method("GET")
+                .path("/product")
+                .query("id=573")
+                .method("GET")
                 .willRespondWith()
-                    .status(200)
-                    .headers(headers)
-                    .body("{" +
+                .status(200)
+                .headers(headers)
+                .body("{" +
                         "\"name\": \"Consumer Test\"," +
                         "\"description\" : \"Consumer Test verifies provider\"," +
                         "\"type\": \"testing product\"" +
                         "}")
-                .toFragment();
-         //@formatter:on
+                .toPact();
     }
 
-    protected String providerName() {
-        return "product-provider-demo";
-    }
 
-    protected String consumerName() {
-        return "product-consumer-demo";
-    }
-
-    protected void runTest(String url) throws IOException {
-        URI productInfoUri = URI.create(String.format("%s/%s", url, "product?id=537"));
-        ProductRestFetcher productRestFetcher = new ProductRestFetcher();
-        Product product = productRestFetcher.fetchProductInfo(productInfoUri);
-
-        assertEquals(EXPECTED_NAME, product.getName());
-        assertEquals(EXPECTED_TYPE, product.getType());
-        assertEquals(EXPECTED_DESC, product.getDescription());
+    @Test
+    @PactTestFor(pactMethod = "createPact")
+    void runTest() {
+        Product result = productConsumer.getProductInfo(PRODUCT_ID);
+        Assertions.assertThat(result.getName()).isEqualTo(EXPECTED_NAME);
+        Assertions.assertThat(result.getType()).isEqualTo(EXPECTED_TYPE);
+        Assertions.assertThat(result.getDescription()).isEqualTo(EXPECTED_DESC);
     }
 }
