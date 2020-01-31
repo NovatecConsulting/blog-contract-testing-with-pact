@@ -1,0 +1,45 @@
+{
+  "provider": {
+    "name": "product-provider-demo"
+  },
+  "consumer": {
+    "name": "product-second-consumer-demo"
+  },
+  "interactions": [
+    {
+      "description": "SecondConsumerDemoTest interaction",
+      "request": {
+        "method": "GET",
+        "path": "/product",
+        "query": {
+          "id": [
+            "532"
+          ]
+        }
+      },
+      "response": {
+        "status": 200,
+        "headers": {
+          "Content-Type": "application/json"
+        },
+        "body": {
+          "name": "Consumer Test",
+          "type": "testing product"
+        }
+      },
+      "providerStates": [
+        {
+          "name": "second consumer demo first state"
+        }
+      ]
+    }
+  ],
+  "metadata": {
+    "pactSpecification": {
+      "version": "3.0.0"
+    },
+    "pact-jvm": {
+      "version": "3.6.14"
+    }
+  }
+}

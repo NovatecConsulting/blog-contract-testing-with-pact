@@ -1,20 +1,18 @@
 package product_demo;
 
-import org.springframework.http.MediaType;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
+@RequestMapping("/product")
 public class ProductController {
     private static final String productDescription = "%s verifies provider";
     private static final String PRODUCT_NAME = "Consumer Test";
-    private String productType = "testing product";
 
-    @RequestMapping(value = "/product", produces = MediaType.APPLICATION_JSON_VALUE, method = RequestMethod.GET)
+    @GetMapping
+    @ResponseStatus(HttpStatus.OK)
     public Product product(@RequestParam(value = "id", defaultValue = "1") Integer productId) {
-        return new Product(productId, PRODUCT_NAME, productType, String.format(productDescription, PRODUCT_NAME
-        ));
+        String productType = "testing product";
+        return new Product(productId, PRODUCT_NAME, productType, String.format(productDescription, PRODUCT_NAME));
     }
 }
