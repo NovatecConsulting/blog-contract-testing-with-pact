@@ -1,6 +1,7 @@
 package product_demo;
 
-public class TestConstants {
-    public static final String EXPECTED_NAME = "Consumer Test";
-    public static final String EXPECTED_TYPE = "testing product";
+class TestConstants {
+    static final String EXPECTED_NAME = "Consumer Test";
+    static final String EXPECTED_TYPE = "testing product";
+    static final int PRODUCT_ID = 532;
 }
