@@ -2,10 +2,11 @@ plugins {
     id 'org.springframework.boot' version '2.2.4.RELEASE'
     id 'io.spring.dependency-management' version '1.0.9.RELEASE'
     id 'java'
+    id 'au.com.dius.pact' version '4.1.6'
 }
 
 group = 'com.example'
-version = '0.0.1-SNAPSHOT'
+version = '0.0.1'
 sourceCompatibility = '1.8'
 
 repositories {
@@ -22,4 +23,16 @@ dependencies {
 
 test {
     useJUnitPlatform()
+}
+
+/**
+ * Configuration of the pactPublish task
+ */
+pact {
+    publish {
+        pactDirectory = 'target/pacts'
+        pactBrokerUrl = "${pactUrl}"
+        pactBrokerToken = "${pactAuthToken}"
+        tags = ['latest', 'dev']
+    }
 }
