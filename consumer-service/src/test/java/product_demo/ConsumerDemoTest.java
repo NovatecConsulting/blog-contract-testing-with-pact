@@ -24,7 +24,7 @@ import static product_demo.TestConstants.*;
 @SpringBootTest
 @ExtendWith(PactConsumerTestExt.class)
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
-@PactTestFor(providerName = "product-provider-demo", port = "8081")
+@PactTestFor(providerName = "product-service", port = "8081")
 public class ConsumerDemoTest {
 
     @Autowired
@@ -38,7 +38,7 @@ public class ConsumerDemoTest {
         productServiceConfigurationProperties.setBaseUrl("http://127.0.0.1:8081");
     }
 
-    @Pact(provider = "product-provider-demo", consumer = "product-consumer-demo")
+    @Pact(provider = "product-service", consumer = "product-consumer-service")
     RequestResponsePact createPact(PactDslWithProvider pactDslWithProvider) {
         Map<String, String> headers = new HashMap<>();
         headers.put("Content-Type", "application/json");
@@ -64,6 +64,7 @@ public class ConsumerDemoTest {
     @PactTestFor(pactMethod = "createPact")
     void runTest() {
         Product result = productConsumer.getProductInfo(PRODUCT_ID);
+
         Assertions.assertThat(result.getName()).isEqualTo(EXPECTED_NAME);
         Assertions.assertThat(result.getType()).isEqualTo(EXPECTED_TYPE);
         Assertions.assertThat(result.getDescription()).isEqualTo(EXPECTED_DESC);
