@@ -1,9 +1,9 @@
 {
   "provider": {
-    "name": "product-provider-demo"
+    "name": "product-service"
   },
   "consumer": {
-    "name": "product-second-consumer-demo"
+    "name": "product-second-consumer-service"
   },
   "interactions": [
     {

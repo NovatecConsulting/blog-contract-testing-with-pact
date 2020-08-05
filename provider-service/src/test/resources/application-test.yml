@@ -1,0 +1,5 @@
+pactbroker:
+  host: "<PACT_HOST>"
+  protocol: "https"
+  auth:
+    token: "<PACT_TOKEN>"
