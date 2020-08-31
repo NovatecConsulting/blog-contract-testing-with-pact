@@ -31,13 +31,13 @@ public class ProductApiContractTest {
         System.setProperty("pact.provider.version", "0.0.1");
     }
 
-    @State("test demo first state")
+    @State("Product with id 573 state")
     public void demoStateConsumerOne() {
-        System.out.println("Provider is in demo state...");
+        System.out.println("Interaction first consumer...");
     }
 
-    @State("second consumer demo first state")
+    @State("Product with id 532 state")
     public void demoStateConsumerTwo() {
-        System.out.println("Provider is in demo state...");
+        System.out.println("Interaction second consumer...");
     }
 }

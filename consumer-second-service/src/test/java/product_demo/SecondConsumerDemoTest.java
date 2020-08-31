@@ -43,7 +43,7 @@ public class SecondConsumerDemoTest {
         Map<String, String> headers = new HashMap<>();
         headers.put("Content-Type", "application/json");
         return pactDslWithProvider
-                .given("second consumer demo first state")
+                .given("Product with id 532 state")
                 .uponReceiving("SecondConsumerDemoTest interaction")
                 .path("/product")
                 .query("id=532")
